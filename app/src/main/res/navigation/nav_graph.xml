@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/myGardenFragment">
+
+    <fragment
+        android:id="@+id/myGardenFragment"
+        android:name="com.rodriguesporan.gardener.MyGardenFragment"
+        android:label="fragment_my_garden"
+        tools:layout="@layout/fragment_garden" >
+        <action
+            android:id="@+id/action_myGardenFragment_to_myGardenPlantDetailFragment"
+            app:destination="@id/myGardenPlantDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myGardenPlantDetailFragment"
+        android:name="com.rodriguesporan.gardener.GardenPlantDetailFragment"
+        android:label="fragment_garden_plant_detail"
+        tools:layout="@layout/fragment_garden_plant_detail" />
+
+    <fragment
+        android:id="@+id/forestFragment"
+        android:name="com.rodriguesporan.gardener.ui.ForestFragment"
+        android:label="forest_fragment"
+        tools:layout="@layout/forest_fragment" />
+</navigation>

@@ -3,4 +3,5 @@
     <string name="my_garden">my garden</string>
     <string name="forest">forest</string>
     <string name="main_activity">Main Activity</string>
+    <string name="garden_plant_detail">Garden Plant Detail</string>
 </resources>
