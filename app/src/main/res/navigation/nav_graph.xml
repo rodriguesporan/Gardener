@@ -9,7 +9,7 @@
         android:id="@+id/myGardenFragment"
         android:name="com.rodriguesporan.gardener.MyGardenFragment"
         android:label="fragment_my_garden"
-        tools:layout="@layout/fragment_my_garden" >
+        tools:layout="@layout/fragment_garden" >
         <action
             android:id="@+id/action_myGardenFragment_to_myGardenPlantDetailFragment"
             app:destination="@id/myGardenPlantDetailFragment" />
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/forestFragment"
-        android:name="com.rodriguesporan.gardener.ForestFragment"
+        android:name="com.rodriguesporan.gardener.ui.ForestFragment"
         android:label="forest_fragment"
         tools:layout="@layout/forest_fragment" />
 </navigation>

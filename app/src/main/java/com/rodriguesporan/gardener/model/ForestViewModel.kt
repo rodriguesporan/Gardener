@@ -1,4 +1,4 @@
-package com.rodriguesporan.gardener
+package com.rodriguesporan.gardener.model
 
 import androidx.lifecycle.ViewModel
 
