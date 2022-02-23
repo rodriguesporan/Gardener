@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/myGardenFragment"
-        android:name="com.rodriguesporan.gardener.MyGardenFragment"
+        android:name="com.rodriguesporan.gardener.ui.GardenFragment"
         android:label="fragment_my_garden"
         tools:layout="@layout/fragment_garden" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/myGardenPlantDetailFragment"
-        android:name="com.rodriguesporan.gardener.GardenPlantDetailFragment"
+        android:name="com.rodriguesporan.gardener.ui.GardenPlantDetailFragment"
         android:label="fragment_garden_plant_detail"
         tools:layout="@layout/fragment_garden_plant_detail" />
 
