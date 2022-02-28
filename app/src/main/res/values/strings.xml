@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Gardener</string>
+    <string name="my_garden">my garden</string>
+    <string name="forest">forest</string>
+    <string name="main_activity">Main Activity</string>
+    <string name="garden_plant_detail">Garden Plant Detail</string>
+    <string name="forest_list">forest list</string>
+    <string name="my_garden_list">my garden list</string>
 </resources>
