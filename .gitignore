@@ -2,9 +2,12 @@
 .gradle
 /local.properties
 .idea/*
+/.idea/*
+/.idea
 !.idea/copyright
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 ktlint
+.idea/misc.xml
