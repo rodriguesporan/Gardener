@@ -17,12 +17,14 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/my_garden_list"
             android:text="@string/my_garden"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/forest_list"
             android:text="@string/forest"
             />
 
