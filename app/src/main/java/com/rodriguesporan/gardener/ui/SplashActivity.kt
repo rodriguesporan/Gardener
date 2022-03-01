@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.rodriguesporan.gardener.R
-import com.rodriguesporan.gardener.model.SplashViewModel
+import com.rodriguesporan.gardener.viewmodels.SplashViewModel
 import kotlinx.coroutines.flow.collect
 
 class SplashActivity : AppCompatActivity() {
