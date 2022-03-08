@@ -1,38 +1,73 @@
 package com.rodriguesporan.gardener.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rodriguesporan.gardener.data.Plant
+import androidx.lifecycle.viewModelScope
+import com.rodriguesporan.gardener.data.FloraUiState
+import com.rodriguesporan.gardener.data.Message
+import com.rodriguesporan.gardener.utilities.growPlants
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 class ForestViewModel : ViewModel() {
 
-    private val _forestPlantList = MutableLiveData<List<Plant>>()
-    val forestPlantList: LiveData<List<Plant>> get() = _forestPlantList
+    private val _uiState = MutableStateFlow(FloraUiState(emptyList()))
+    val uiState: StateFlow<FloraUiState> get() = _uiState.asStateFlow()
 
     fun onViewCreated() {
-        _forestPlantList.value = fetchPlants()
+        launchFetchPlantsJobAndNotifyLoadingInProgress()
     }
 
-    private fun fetchPlants(): List<Plant> {
-        return listOf(
-            Plant("malus-pumila", "Apple"),
-            Plant("beta-vulgaris", "Beet"),
-            Plant("coriandrum-sativum", "Cilantro"),
-            Plant("solanum-lycopersicum", "Tomato"),
-            Plant("persea-americana", "Avocado"),
-            Plant("pyrus-communis", "Pear"),
-            Plant("solanum-melongena", "Eggplant"),
-            Plant("vitis-vinifera", "Grape"),
-            Plant("mangifera-indica", "Mango"),
-            Plant("citrus-x-sinensis", "Orange"),
-            Plant("helianthus-annuus", "Sunflower"),
-            Plant("citrullus-lanatus", "Watermelon"),
-            Plant("hibiscus-rosa-sinensis", "Hibiscus"),
-            Plant("cypripedium-reginae", "Pink & White Lady's Slipper"),
-            Plant("aquilegia-coerulea", "Rocky Mountain Columbine"),
-            Plant("magnolia-denudata", "Yulan Magnolia"),
-            Plant("bougainvillea-glabra", "Bougainvillea")
-        )
+    fun userMessageShown(messageId: Long) {
+        _uiState.update { currentUiState ->
+            val messages = currentUiState.userMessages.filterNot { it.id == messageId }
+            currentUiState.copy(userMessages = messages, isLoading = false)
+        }
+    }
+
+    private fun launchFetchPlantsJobAndNotifyLoadingInProgress() {
+        var fetchJob: Job? = null
+
+        fetchJob = viewModelScope.launch {
+            fetchJob?.cancel()
+            notifyLoadingInProgress()
+            delay(1000L)
+            try {
+                fetchPlantsAndUpdateState()
+            } catch (throwable: Throwable) {
+                handleErrorAndUpdateState(throwable)
+            }
+        }
+    }
+
+    private fun notifyLoadingInProgress() {
+        _uiState.update { currentUIState ->
+            currentUIState.copy(isLoading = true)
+        }
+    }
+
+    private fun fetchPlantsAndUpdateState() {
+        val plants = growPlants()
+
+        _uiState.update { currentUIState ->
+            currentUIState.copy(plantList = plants, isLoading = false)
+        }
+    }
+
+    private fun handleErrorAndUpdateState(throwable: Throwable) {
+        throwable.message?.let { messageValue ->
+            _uiState.update { currentUIState ->
+                val messages = currentUIState.userMessages + Message(
+                    id = UUID.randomUUID().mostSignificantBits,
+                    message = messageValue
+                )
+                currentUIState.copy(userMessages = messages, isLoading = false)
+            }
+        }
     }
 }
