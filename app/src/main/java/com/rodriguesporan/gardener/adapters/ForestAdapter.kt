@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.rodriguesporan.gardener.R
-import com.rodriguesporan.gardener.data.PlantUiState
+import com.rodriguesporan.gardener.data.Plant
 import com.rodriguesporan.gardener.adapters.ForestAdapter.PlantViewHolder
 
-class ForestAdapter : ListAdapter<PlantUiState, PlantViewHolder>(DiffCallback) {
+class ForestAdapter : ListAdapter<Plant, PlantViewHolder>(DiffCallback) {
 
     class PlantViewHolder(itemView: View) : ViewHolder(itemView) {
 
-        fun bind(plantUiState: PlantUiState) {
+        fun bind(plant: Plant) {
             val tvPlantName by lazy { itemView.findViewById<TextView>(R.id.text_view_plant_name) }
-            tvPlantName.text = plantUiState.name
+            tvPlantName.text = plant.name
         }
     }
 
@@ -33,12 +33,12 @@ class ForestAdapter : ListAdapter<PlantUiState, PlantViewHolder>(DiffCallback) {
         holder.bind(plant)
     }
 
-    companion object DiffCallback : ItemCallback<PlantUiState>() {
-        override fun areItemsTheSame(oldItem: PlantUiState, newItem: PlantUiState): Boolean {
+    companion object DiffCallback : ItemCallback<Plant>() {
+        override fun areItemsTheSame(oldItem: Plant, newItem: Plant): Boolean {
             return oldItem.plantId == newItem.plantId
         }
 
-        override fun areContentsTheSame(oldItem: PlantUiState, newItem: PlantUiState): Boolean {
+        override fun areContentsTheSame(oldItem: Plant, newItem: Plant): Boolean {
             return oldItem.name == newItem.name
         }
     }

@@ -11,12 +11,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rodriguesporan.gardener.viewmodels.ForestViewModel
 import com.rodriguesporan.gardener.R
 import com.rodriguesporan.gardener.adapters.ForestAdapter
 import com.rodriguesporan.gardener.data.FloraUiState
 import com.rodriguesporan.gardener.data.Message
-import com.rodriguesporan.gardener.data.PlantUiState
+import com.rodriguesporan.gardener.data.Plant
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -39,8 +40,7 @@ class ForestFragment : Fragment() {
 
         setUpViews()
         setUpObservers()
-        viewModel.onViewCreated()
-        // TODO: Add accessibility
+        viewModel.onViewCreated(requireContext())
     }
 
     private fun setUpViews() {
@@ -65,7 +65,7 @@ class ForestFragment : Fragment() {
     private fun handleStateChanges(currentUiState: FloraUiState) {
         currentUiState.run {
             handleProgressBar(isLoading)
-            updateForestAdapter(plantList)
+            updateForestAdapter(plants)
             handleUserMessages(userMessages)
         }
     }
@@ -74,17 +74,18 @@ class ForestFragment : Fragment() {
         progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun updateForestAdapter(plantList: List<PlantUiState>) {
-        forestAdapter.submitList(plantList)
+    private fun updateForestAdapter(plants: List<Plant>) {
+        forestAdapter.submitList(plants)
     }
 
     private fun handleUserMessages(userMessages: List<Message>) {
         userMessages.firstOrNull()?.let {
                 userMessage ->
-            // TODO: Show Snackbar with userMessage
-            // Once the message is displayed and
-            // dismissed, notify the ViewModel.
-            viewModel.userMessageShown(userMessage.id)
+
+            recyclerView?.let {
+                Snackbar.make(it, userMessage.message, Snackbar.LENGTH_SHORT).show()
+                viewModel.userMessageShown(userMessage.id)
+            }
         }
     }
 }
